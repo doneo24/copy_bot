@@ -2,7 +2,10 @@ import os
 from telegram.ext import Updater, CommandHandler
 from llama_index import GPTVectorStoreIndex
 
-index = GPTVectorStoreIndex.load_from_disk("index.json")
+from llama_index import StorageContext, load_index_from_storage
+storage_context = StorageContext.from_defaults(persist_dir="./")
+index = load_index_from_storage(storage_context)
+
 query_engine = index.as_query_engine()
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
